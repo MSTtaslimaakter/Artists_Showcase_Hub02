@@ -7,6 +7,7 @@ from .models import *
 from django.contrib.auth import authenticate, login  # Import the login function
 from .models import Painting, Comment
 from .forms import CommentForm  
+from django.contrib.auth import get_user_model
 
 def Home (request):
     return render (request,'home.html')
@@ -322,14 +323,18 @@ def delete_photography(request, id):
     return render(request, 'delete_photography.html', {'photo': photo})
 
 def login_view(request):
+    error = None
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('Profile')  # Redirect to the profile page after successful login
-    return render(request, 'login.html')  # Return the login page if not POST
+            return redirect('Profile')  # Successfully logged in
+        else:
+            error = "Invalid username or password."
+    
+    return render(request, 'log_in.html', {'error': error})  # Pass error to template
 
 def profile_view(request):
     return render(request, 'profile.html')  # Render the profile page
@@ -342,3 +347,9 @@ def add_comment(request, painting_id):
             Comment.objects.create(painting=painting, text=comment_text)
         return redirect('paintings')  # Redirect back to the paintings page
     return redirect('paintings')  # Redirect back if the method is not POST
+
+def create_user_view(request):
+    User = get_user_model()
+    User.objects.create_user(username='john', password='john123')
+    return HttpResponse("User created")
+

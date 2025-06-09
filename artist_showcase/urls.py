@@ -27,7 +27,8 @@ urlpatterns = [
     path('profile/',views.Profile,name='Profile'),
     path('event/', views.event_page, name='event'),
     path('sign_in/',views.Sign_in,name='Sign_in'),
-    path('log_in/',views.Log_in,name='Log_in'),
+    path('log_in/', views.login_view, name='log_in'),
+
     path('gallery/', views.Gallery, name='gallery'),
     path('artist_profile/',views.artist,name='artist_profile'),
     path('payment/',views.payment,name='payment'),

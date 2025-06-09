@@ -24,18 +24,25 @@
     <!-- Main Content Section -->
     <main class="content">
         <h2>Log In</h2>
-        <form action="{% url 'Log_in' %}" method="POST" class="login-form">
+        <form action="{% url 'log_in' %}" method="POST" class="login-form">
+
+        
             {% csrf_token %}
+            
             <div class="form-group">
                 <input type="text" name="username" placeholder="Id/Username" required>
             </div>
             <div class="form-group">
                 <input type="password" name="password" placeholder="Password" required>
-                <p class="forgot-password"><a href="#">Forgot Password?</a></p>
+                 <p class="forgot-password"><a href="#">Forgot Password?</a></p> 
             </div>
             <div class="form-group">
                 <input type="submit" value="Log In" class="btn">
             </div>
+
+            {% if error %}
+              <p class="error-message" style="color: rgb(161, 43, 43);">{{ error }}</p>
+            {% endif %}
             
             <p class="social-login">Log in with:</p>
             <div class="social-icons">
@@ -44,10 +51,8 @@
                 </a>
                 <a href="https://www.google.com" target="_blank">
                     <img src="https://i.postimg.cc/7YvzZzbh/google.jpg" style="width: 50px; height: 50px;">
-                </a>
             </div>
         </form>
-        
     </main>
 
     <!-- Footer Section -->
